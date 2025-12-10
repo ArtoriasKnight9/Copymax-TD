@@ -1,0 +1,95 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Coffee" language="java" columnCount="1" pageWidth="612" pageHeight="792" orientation="Landscape" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ced95029-b569-4027-895c-af2843a4e088">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Copymax"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50.0" bold="true"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18.0"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12.0" bold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12.0"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle backcolor="#E6DAC3">
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<query language="SQL"><![CDATA[SELECT COUNT(idVenta) AS TotalVentas, SUM(Total) AS TotalIngresos 
+FROM venta 
+WHERE DATE(Fecha) = CURDATE();]]></query>
+	<field name="TotalIngresos" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="TotalIngresos"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalIngresos"/>
+	</field>
+	<field name="TotalVentas" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="TotalVentas"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalVentas"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="152" splitType="Stretch">
+		<element kind="image" uuid="ddc15723-2728-421f-b95e-2df9faf64ce1" x="10" y="-2" width="150" height="150">
+			<expression><![CDATA["C:/Users/maxst/OneDrive/Escritorio/Copymax3.2/src/Imagenes/Logopng (Custom).png"]]></expression>
+		</element>
+		<element kind="staticText" uuid="1a652692-054a-40f3-ade5-68d8da36626d" x="180" y="0" width="210" height="62" vTextAlign="Middle" style="Title">
+			<text><![CDATA[Copymax]]></text>
+		</element>
+		<element kind="staticText" uuid="f0bfb1ea-a85a-47cd-a1a4-43f22b45e80f" x="180" y="70" width="205" height="26" fontSize="19.0" hTextAlign="Right">
+			<text><![CDATA[Reporte de Venta Diario]]></text>
+		</element>
+	</title>
+	<pageHeader splitType="Stretch"/>
+	<columnHeader height="16" splitType="Stretch">
+		<element kind="line" uuid="1a61a836-d137-48b1-ad67-6ff64600bf93" positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1">
+			<pen lineWidth="0.5" lineColor="#999999"/>
+		</element>
+		<element kind="staticText" uuid="1d193208-1341-49d4-8918-ce800b6afbe7" x="0" y="1" width="277" height="15" forecolor="#0D0C0B" style="Column header">
+			<text><![CDATA[Total de Ventas Realizadas]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="71fc8ba8-91ce-444a-b024-dd77c8fc053c"/>
+		</element>
+		<element kind="staticText" uuid="b2edf49a-a806-4f40-b4c5-769992d78efb" x="280" y="1" width="277" height="15" forecolor="#0A0A09" fontSize="12.0" style="Column header">
+			<text><![CDATA[Total de Ingresos]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="254e9a8f-2b17-4491-8426-e51195c632d8"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<element kind="frame" uuid="a98495d8-3c8d-4fa0-81f5-30c3efc2f766" mode="Opaque" x="0" y="0" width="555" height="15" style="Row">
+				<element kind="textField" uuid="74ad950f-d896-4dc8-a61d-d49ca58498ca" x="280" y="0" width="277" height="15" textAdjust="StretchHeight" style="Detail">
+					<expression><![CDATA[$F{TotalIngresos}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="254e9a8f-2b17-4491-8426-e51195c632d8"/>
+				</element>
+				<element kind="textField" uuid="fdbbd24b-cbb7-43bf-b918-4ffcbbf8ff69" x="0" y="0" width="277" height="15" textAdjust="StretchHeight" style="Detail">
+					<expression><![CDATA[$F{TotalVentas}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="71fc8ba8-91ce-444a-b024-dd77c8fc053c"/>
+				</element>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch">
+		<element kind="line" uuid="fa45a887-615a-4d84-a2d7-8a2219671b3c" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1">
+			<pen lineWidth="0.5" lineColor="#999999"/>
+		</element>
+	</columnFooter>
+	<pageFooter height="25" splitType="Stretch">
+		<element kind="frame" uuid="183682bc-d976-4756-83e0-6625a3f98ed1" mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF">
+			<element kind="textField" uuid="0193f9b3-1559-491a-8580-b6988863b6a1" x="543" y="-229" width="47" height="20" forecolor="#0F0F0E" fontSize="10.0" evaluationTime="Report" bold="false" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+			</element>
+			<element kind="textField" uuid="d00b105e-494b-418b-8ac9-8b1b4824f4f0" x="463" y="-229" width="80" height="20" forecolor="#0F0F0E" fontSize="10.0" bold="false" hTextAlign="Right" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></expression>
+			</element>
+			<element kind="textField" uuid="0616f3fe-0354-456f-8911-ec30ec51a5ae" x="463" y="-208" width="134" height="68" forecolor="#0F0F0E" fontSize="10.0" pattern="EEEEE dd MMMMM yyyy" bold="false" vTextAlign="Middle" style="Column header">
+				<expression><![CDATA["Fecha: " + new java.util.Date() +
+
+"Hora" + new java.util.Hour()]]></expression>
+			</element>
+		</element>
+	</pageFooter>
+	<summary splitType="Stretch"/>
+</jasperReport>

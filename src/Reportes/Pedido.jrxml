@@ -1,0 +1,240 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Pedido" language="java" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="325c78d7-8748-492c-9aec-885c23a8e02f">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Copymax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="Numpedido" class="java.lang.Integer"/>
+	<query language="sql"><![CDATA[select Numpedido, Nombre_Usuario, Nombre_Cliente, Apellidos_Cliente, CelularCliente, Servicio, Cantidad, CantidadCarta, CantidadOficio,Tamaño,TipoDeCopia, Servicioextra,Escala, FechaEmision, HoraEmision, FechaEntrega, HoraEntrega, NumeroDePag, Frente, Atras, Arillo, Comentarios, Total
+, Anticipo, Resto from copymax.pedido where Numpedido = $P{Numpedido}  ;]]></query>
+	<field name="Numpedido" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="NumPedido"/>
+		<property name="com.jaspersoft.studio.field.label" value="Numpedido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Nombre_Usuario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nombre_Usuario"/>
+		<property name="com.jaspersoft.studio.field.label" value="Nombre_Usuario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Nombre_Cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nombre_Cliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="Nombre_Cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Apellidos_Cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Apellidos_Cliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="Apellidos_Cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="CelularCliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CelularCliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="CelularCliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Servicio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Servicio"/>
+		<property name="com.jaspersoft.studio.field.label" value="Servicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Cantidad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Cantidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="Cantidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="CantidadCarta" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="CantidadCarta"/>
+		<property name="com.jaspersoft.studio.field.label" value="CantidadCarta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="CantidadOficio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="CantidadOficio"/>
+		<property name="com.jaspersoft.studio.field.label" value="CantidadOficio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Tamaño" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Tamaño"/>
+		<property name="com.jaspersoft.studio.field.label" value="Tamaño"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="TipoDeCopia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TipoDeCopia"/>
+		<property name="com.jaspersoft.studio.field.label" value="TipoDeCopia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Servicioextra" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Servicioextra"/>
+		<property name="com.jaspersoft.studio.field.label" value="Servicioextra"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Escala" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Escala"/>
+		<property name="com.jaspersoft.studio.field.label" value="Escala"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="FechaEmision" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="FechaEmision"/>
+		<property name="com.jaspersoft.studio.field.label" value="FechaEmision"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="HoraEmision" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.name" value="HoraEmision"/>
+		<property name="com.jaspersoft.studio.field.label" value="HoraEmision"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="FechaEntrega" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="FechaEntrega"/>
+		<property name="com.jaspersoft.studio.field.label" value="FechaEntrega"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="HoraEntrega" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.name" value="HoraEntrega"/>
+		<property name="com.jaspersoft.studio.field.label" value="HoraEntrega"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="NumeroDePag" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="NumeroDePag"/>
+		<property name="com.jaspersoft.studio.field.label" value="NumeroDePag"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Frente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Frente"/>
+		<property name="com.jaspersoft.studio.field.label" value="Frente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Atras" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Atras"/>
+		<property name="com.jaspersoft.studio.field.label" value="Atras"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Arillo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Arillo"/>
+		<property name="com.jaspersoft.studio.field.label" value="Arillo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Comentarios" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Comentarios"/>
+		<property name="com.jaspersoft.studio.field.label" value="Comentarios"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="Total"/>
+		<property name="com.jaspersoft.studio.field.label" value="Total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Anticipo" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="Anticipo"/>
+		<property name="com.jaspersoft.studio.field.label" value="Anticipo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<field name="Resto" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="Resto"/>
+		<property name="com.jaspersoft.studio.field.label" value="Resto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pedido"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="150" splitType="Stretch">
+		<element kind="image" uuid="aa5199bd-98a9-4ca1-8ea8-a5531ad71b30" x="0" y="0" width="140" height="150">
+			<expression><![CDATA["C:/Users/maxst/OneDrive/Escritorio/Copymax3.2/src/Imagenes/Logopng (Custom).png"]]></expression>
+		</element>
+		<element kind="staticText" uuid="670d8757-9dc8-4960-9838-e72544628b52" x="140" y="80" width="280" height="70" fontSize="12.0" hTextAlign="Center">
+			<text><![CDATA[Calzada Madero N°999-L1        
+Centro Oaxaca, Oax C.P 6800       
+RFC: BAPB7112044N2 Regimen Inc.Fiscal
+Tel. 51-6-93-43   Cel.9516470579]]></text>
+		</element>
+		<element kind="staticText" uuid="499f0578-4b76-44ba-9f12-59829e7738c7" x="145" y="10" width="270" height="70" fontSize="50.0" hTextAlign="Center">
+			<text><![CDATA[COPYMAX]]></text>
+		</element>
+	</title>
+	<pageHeader height="55" splitType="Stretch">
+		<element kind="textField" uuid="ca91d6cc-90ae-45af-a3f7-203e20cf51c9" x="140" y="10" width="120" height="30" forecolor="#FF0905" fontSize="22.0" hTextAlign="Left">
+			<expression><![CDATA[$F{Numpedido}]]></expression>
+		</element>
+		<element kind="textField" uuid="fa3c46b0-1fde-4d91-b669-937b0ab5323d" x="0" y="10" width="160" height="30" forecolor="#000000" fontSize="22.0" hTextAlign="Left">
+			<expression><![CDATA["N° de Pedido: "]]></expression>
+		</element>
+		<element kind="textField" uuid="10a90bcd-fdca-43f0-b828-fead86f8868c" x="300" y="10" width="272" height="30" fontSize="22.0" pattern="MMMMM dd, yyyy" hTextAlign="Center">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+	</pageHeader>
+	<columnHeader height="131" splitType="Stretch">
+		<element kind="textField" uuid="49f5f78d-01dc-4778-acb1-e738c0bfe97a" x="0" y="0" width="290" height="130" fontSize="19.0">
+			<expression><![CDATA["Le atendio: " + $F{Nombre_Usuario} + "\n"+
+"Nombre: " + $F{Nombre_Cliente} + "\n"+
+"Celular: " + $F{CelularCliente}]]></expression>
+		</element>
+		<element kind="textField" uuid="2e34fd9f-3897-486e-a59b-c1c0e4410ddf" x="300" y="2" width="290" height="128" fontSize="19.0">
+			<expression><![CDATA["Servicio: " + $F{Servicio}+ "\nTamaño: "+ $F{Tamaño}+ "\n"+
+"Cantidad: " + $F{Cantidad} + "\n"+
+"T/C: " + $F{CantidadCarta} + "   T/O: "+$F{CantidadOficio}]]></expression>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="217" splitType="Stretch">
+			<element kind="textField" uuid="86f664b8-94d9-4e6b-bbe1-9cf93c7fe38f" x="0" y="10" width="280" height="30" fontSize="17.0">
+				<expression><![CDATA["Tipo de Copia: " + $F{TipoDeCopia} 
+]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a33a19a-a056-478a-8601-31af754e90e6"/>
+			</element>
+			<element kind="textField" uuid="13e8b285-377a-4832-b3ce-ce9dd652213c" x="0" y="40" width="280" height="30" fontSize="17.0">
+				<expression><![CDATA["Servicio Extra: " + $F{Servicioextra}
+]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a33a19a-a056-478a-8601-31af754e90e6"/>
+			</element>
+			<element kind="textField" uuid="2f55e169-cbcd-41e4-8a0d-597e17166bf4" x="0" y="70" width="280" height="30" fontSize="17.0">
+				<expression><![CDATA["Escala: " + $F{Escala}
+]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a33a19a-a056-478a-8601-31af754e90e6"/>
+			</element>
+			<element kind="textField" uuid="98aee1ba-cbf1-4071-824c-dc79ec7db03b" x="290" y="10" width="280" height="90" fontSize="17.0">
+				<expression><![CDATA[" Frente:  " + $F{Frente} +"\n"+
+" Atras: " + $F{Atras} +"\n"+
+" Arillo: " +$F{Arillo}
+]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a33a19a-a056-478a-8601-31af754e90e6"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+			<element kind="textField" uuid="40f10915-7a22-4621-bc94-50eb353194be" x="0" y="130" width="570" height="87" fontSize="19.0">
+				<expression><![CDATA["  Comentarios: " + $F{Comentarios}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="104d852d-c686-4d08-84bb-5940ee82ef90"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch">
+		<element kind="textField" uuid="8dd3dff2-844e-458b-830d-66a47a63128a" x="2" y="7" width="568" height="30" fontSize="17.0" hTextAlign="Center">
+			<expression><![CDATA["Total: $" + $F{Total} + "     Anticipo: $" + $F{Anticipo}+ "     Resto: $" + $F{Resto}]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a33a19a-a056-478a-8601-31af754e90e6"/>
+		</element>
+	</columnFooter>
+	<pageFooter height="89" splitType="Stretch">
+		<element kind="textField" uuid="bdaf233d-4ba8-4aa6-9184-6d1b65850483" x="0" y="10" width="280" height="30" fontSize="17.0" hTextAlign="Center">
+			<expression><![CDATA["Fecha de emisión: " + $F{FechaEmision} ]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a33a19a-a056-478a-8601-31af754e90e6"/>
+		</element>
+		<element kind="textField" uuid="1ca61b19-520d-436a-bd2f-e097de584c6a" x="0" y="40" width="280" height="30" fontSize="17.0" hTextAlign="Center">
+			<expression><![CDATA["Hora de emisión: "+ $F{HoraEmision}
+]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a33a19a-a056-478a-8601-31af754e90e6"/>
+		</element>
+		<element kind="textField" uuid="11674235-ae53-4373-a006-850f96991bd4" x="282" y="40" width="280" height="30" fontSize="17.0" hTextAlign="Center">
+			<expression><![CDATA["Hora de entrega: "+ $F{HoraEntrega}
+]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a33a19a-a056-478a-8601-31af754e90e6"/>
+		</element>
+		<element kind="textField" uuid="13e27460-8d9f-429b-9e4a-52074e18612a" x="282" y="10" width="280" height="30" fontSize="17.0" hTextAlign="Center">
+			<expression><![CDATA["Fecha de entrega: " + $F{FechaEntrega}]]></expression>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a33a19a-a056-478a-8601-31af754e90e6"/>
+		</element>
+	</pageFooter>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

@@ -1,0 +1,119 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Dia" language="java" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0b557651-89e1-4bd4-81e5-d412c2075a9f">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="254"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="737"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Copymax"/>
+	<query language="SQL"><![CDATA[SELECT 
+    u.idUsuario AS IdUsuarioReporte,
+    u.Nombre AS NombreUsuarioReporte,
+    u.Rol AS RolUsuarioReporte,
+    (SELECT Nombre FROM usuario WHERE Rol = 'Administrador' LIMIT 1) AS AdministradorAutorizante,
+    
+    -- Ventas por método de pago
+    SUM(IF(v.Metodo_pago = 'Efectivo', 1, 0)) AS TotalVentasEfectivo,
+    SUM(IF(v.Metodo_pago = 'Tarjeta', 1, 0)) AS TotalVentasTarjeta,
+    SUM(IF(v.Metodo_pago = 'Efectivo', v.Total, 0)) AS TotalDineroEfectivo,
+    SUM(IF(v.Metodo_pago = 'Tarjeta', v.Total, 0)) AS TotalDineroTarjeta,
+    
+    -- Suma de descuentos y suma de impuestos
+    SUM(v.Descuento) AS SumaDescuentos,
+    SUM(v.Impuesto) AS SumaImpuestos,
+    
+    -- Total de todas las ventas
+    SUM(v.Total) AS TotalVentasDiarias
+    
+FROM 
+    venta v
+JOIN 
+    usuario u ON u.idUsuario = v.Usuario_idUsuario -- Relación entre las tablas
+WHERE 
+    DATE(v.Fecha) = CURDATE() -- Solo ventas del día actual
+GROUP BY 
+    u.idUsuario, u.Nombre, u.Rol;
+ ]]></query>
+	<field name="IdUsuarioReporte" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="idUsuario"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdUsuarioReporte"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="usuario"/>
+	</field>
+	<field name="NombreUsuarioReporte" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreUsuarioReporte"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="usuario"/>
+	</field>
+	<field name="RolUsuarioReporte" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Rol"/>
+		<property name="com.jaspersoft.studio.field.label" value="RolUsuarioReporte"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="usuario"/>
+	</field>
+	<field name="AdministradorAutorizante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="AdministradorAutorizante"/>
+		<property name="com.jaspersoft.studio.field.label" value="AdministradorAutorizante"/>
+	</field>
+	<field name="TotalVentasEfectivo" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TotalVentasEfectivo"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalVentasEfectivo"/>
+	</field>
+	<field name="TotalVentasTarjeta" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TotalVentasTarjeta"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalVentasTarjeta"/>
+	</field>
+	<field name="TotalDineroEfectivo" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="TotalDineroEfectivo"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalDineroEfectivo"/>
+	</field>
+	<field name="TotalDineroTarjeta" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="TotalDineroTarjeta"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalDineroTarjeta"/>
+	</field>
+	<field name="SumaDescuentos" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="SumaDescuentos"/>
+		<property name="com.jaspersoft.studio.field.label" value="SumaDescuentos"/>
+	</field>
+	<field name="SumaImpuestos" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="SumaImpuestos"/>
+		<property name="com.jaspersoft.studio.field.label" value="SumaImpuestos"/>
+	</field>
+	<field name="TotalVentasDiarias" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="TotalVentasDiarias"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalVentasDiarias"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="150" splitType="Stretch">
+		<element kind="image" uuid="c02ea004-9e40-416d-a06b-6f8681669ec5" x="0" y="0" width="140" height="150">
+			<expression><![CDATA["C:/Users/maxst/OneDrive/Escritorio/Copymax3.2/src/Imagenes/Logopng (Custom).png"]]></expression>
+		</element>
+		<element kind="staticText" uuid="5439e746-f631-4dad-803b-758498035f46" x="145" y="10" width="270" height="70" fontSize="50.0" hTextAlign="Center">
+			<text><![CDATA[COPYMAX]]></text>
+		</element>
+		<element kind="staticText" uuid="418d79d6-6760-452d-ad43-c89bcd364b7c" x="145" y="100" width="280" height="50" fontSize="12.0" hTextAlign="Center">
+			<text><![CDATA[Calzada Madero N°999-L1        
+Centro Oaxaca, Oax C.P 6800       
+RFC: BAPB7112044N2 Regimen Inc.Fiscal]]></text>
+		</element>
+		<element kind="textField" uuid="ffa91ee5-1fa5-4067-955d-e1f7945cbd79" x="390" y="0" width="90" height="30" hTextAlign="Right">
+			<expression><![CDATA["Pagina " + $V{PAGE_NUMBER}]]></expression>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+		</element>
+		<element kind="textField" uuid="0740dd67-0c95-4650-b9fc-0ef09badfb9e" x="479" y="0" width="100" height="30" evaluationTime="Report" hTextAlign="Left">
+			<expression><![CDATA[" of " + $V{PAGE_NUMBER}]]></expression>
+		</element>
+		<element kind="textField" uuid="f99f1301-7a81-4a7f-9787-bd393dc0f2fd" x="442" y="20" width="129" height="20" pattern="MMMMM dd, yyyy">
+			<expression><![CDATA["Fecha: " + new java.text.SimpleDateFormat("EEEE, dd/MM/yyyy", new java.util.Locale("es", "ES")).format(new java.util.Date())
+]]></expression>
+		</element>
+		<element kind="textField" uuid="bd5f8d48-37f9-4c41-b5bc-422282ae9da6" x="442" y="40" width="100" height="30" pattern="HH:mm">
+			<expression><![CDATA["Hora: " + new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date())
+]]></expression>
+		</element>
+	</title>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="61" splitType="Stretch"/>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>
