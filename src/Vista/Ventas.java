@@ -49,6 +49,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import Modelo.StockObserver;
+import Modelo.DetalleVenta;
 
 
 /**
@@ -394,14 +395,15 @@ public class Ventas extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Cantidad", "Producto", "P.Unitario", "Total"
+                "Cantidad", "Producto", "P.Unitario", "Total","ID"
             }
         ) {
+            // Tus tipos de datos (agregamos Integer para el ID)
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false
+                true, false, false, false, false // El ID no debe ser editable
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -414,6 +416,10 @@ public class Ventas extends javax.swing.JPanel {
         };
 
         jTableticket.setModel(modelo);
+
+        jTableticket.getColumnModel().getColumn(4).setMinWidth(0);
+        jTableticket.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTableticket.getColumnModel().getColumn(4).setWidth(0);
         jScrollPane1.setViewportView(jTableticket);
         if (jTableticket.getColumnModel().getColumnCount() > 0) {
             jTableticket.getColumnModel().getColumn(0).setMinWidth(60);
@@ -764,10 +770,17 @@ private void cobro() {
         // Limpiar la tabla
         limpiarTabla();
 
-        // Agregar el paquete como una nueva fila en la tabla
-        Object[] nuevaFila = {1, nombrePaquete, total,total}; // Ajusta las columnas según tu tabla
-        model.addRow(nuevaFila);
+        int idPaqueteGenerico = 0; // O el ID que decidas usar para items que no son productos individuales
 
+        Object[] nuevaFila = {
+            1,              // Cantidad
+            nombrePaquete,  // Descripción
+            total,          // Precio Unitario
+            total,          // Total
+            idPaqueteGenerico // <--- AGREGAMOS LA 5ta COLUMNA (ID OCULTO)
+        }; 
+
+        model.addRow(nuevaFila);
         // Actualizar la tabla
 
     }//GEN-LAST:event_BtnformarpaqueteActionPerformed
@@ -919,13 +932,21 @@ public void agregarProductoAlTicket(Productosprecios producto) {
     
     // Si el producto no existe, agregar una nueva fila
     if (!productoExistente) {
-        int cantidad = 1;  // Por defecto, agregamos una cantidad de 1
+        int cantidad = 1;
         double totalProducto = cantidad * producto.getPrecio();
-        Object[] fila = new Object[4]; // Cambia a 4 columnas
+        
+        // CAMBIO: Ahora el array es de 5 posiciones, no 4
+        Object[] fila = new Object[5]; 
+        
         fila[0] = cantidad;
         fila[1] = producto.getNombre();
         fila[2] = producto.getPrecio();
         fila[3] = totalProducto;
+        System.out.println("Agregando producto ID: " + producto.getId());
+        // CAMBIO: Aquí guardamos el ID
+        // Asegúrate que tu clase producto tenga .getId()
+        fila[4] = producto.getId(); 
+        
         modelo.addRow(fila);
     }
     
@@ -1007,20 +1028,20 @@ public boolean validarStockEnTicket(List<Producto> productos) {
     }
     
     
-    
     if (!productoExistente) {
-        // Producto no está en el ticket, agregar una nueva fila
-        int cantidad = 1;  // Por defecto, agregamos una cantidad de 1
+        int cantidad = 1;
         double totalProducto = cantidad * producto.getPrecio();
-        Object[] fila = new Object[4]; // Cambia a 4 columnas
+        
+        // --- CORRECCIÓN AQUÍ ---
+        Object[] fila = new Object[5]; // Cambiamos de 4 a 5
         fila[0] = cantidad;
         fila[1] = producto.getNombre();
         fila[2] = producto.getPrecio();
         fila[3] = totalProducto;
+        fila[4] = producto.getId(); // <--- AGREGAMOS EL ID
+        
         modelo.addRow(fila);
     }
-
-    // Actualizar el subtotal y el total
     recalcularTotales();
 }
 
@@ -1254,6 +1275,42 @@ private List<String> dividirDescripcionEnLineas(String descripcion, int maxLengt
         lineas.add(descripcion.substring(i, Math.min(length, i + maxLength)));
     }
     return lineas;
+}
+
+public List<DetalleVenta> obtenerDetallesParaGuardar() {
+    List<DetalleVenta> listaDetalles = new ArrayList<>();
+    
+    for (int i = 0; i < modelo.getRowCount(); i++) {
+        try {
+            // 1. Obtener Cantidad
+            Object cantObj = modelo.getValueAt(i, 0);
+            int cantidad = (cantObj != null) ? Integer.parseInt(cantObj.toString()) : 0;
+
+            // 2. Obtener Precio
+            Object precObj = modelo.getValueAt(i, 2);
+            double precio = (precObj != null) ? Double.parseDouble(precObj.toString()) : 0.0;
+            
+            // 3. Obtener ID (Aquí es donde fallaba)
+            Object idObj = modelo.getValueAt(i, 4); // Columna 4 (Índice 5ta columna)
+            int idProd = 0;
+            
+            if (idObj != null) {
+                idProd = Integer.parseInt(idObj.toString());
+            } else {
+                // Si es nulo, es un error de programación (olvidamos poner el ID al agregar la fila)
+                System.out.println("ALERTA: Fila " + i + " tiene ID nulo. Se asignará 0.");
+                // Opcional: Lanzar error para avisar al programador
+                // throw new RuntimeException("Producto sin ID en la fila " + i);
+            }
+            
+            listaDetalles.add(new DetalleVenta(idProd, cantidad, precio));
+            
+        } catch (Exception e) {
+            System.out.println("Error al leer la fila " + i + ": " + e.getMessage());
+        }
+    }
+    
+    return listaDetalles;
 }
 
 

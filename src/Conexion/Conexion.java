@@ -87,55 +87,77 @@ public class Conexion {
    
      public List<Productosprecios> obtenerProductos() {
         List<Productosprecios> productos = new ArrayList<>();
-        String sql = "SELECT Nombre_producto, Precio, Icono FROM Productos WHERE Cantidad > 0 AND Categoria IN ('Copia / Impresion', 'Papelería', 'Engargolado');";
+        
+        // CAMBIO 1: Agregamos 'idProductos' a la consulta
+        String sql = "SELECT idProductos, Nombre_producto, Precio, Icono FROM Productos WHERE Cantidad > 0 AND Categoria IN ('Copia / Impresion', 'Papelería', 'Engargolado');";
 
         try (Connection con = getConnection(); 
              PreparedStatement pst = con.prepareStatement(sql);
              ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
+                // CAMBIO 2: Obtenemos el ID de la base de datos
+                int id = rs.getInt("idProductos");
+                
                 String nombre = rs.getString("Nombre_producto");
                 double precio = rs.getDouble("Precio");
                 String icono = rs.getString("Icono");
-                productos.add(new Productosprecios(nombre, precio, icono)); // Agregar producto a la lista
+                
+                // Creamos el objeto
+                Productosprecios prod = new Productosprecios(nombre, precio, icono);
+                
+                // CAMBIO 3: ¡IMPORTANTÍSIMO! Asignamos el ID al objeto
+                prod.setId(id); 
+                
+                productos.add(prod); 
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Imprimir el error de la excepción
+            e.printStackTrace(); 
         }
 
-        return productos; // Retornar la lista de productos
+        return productos; 
     }
     
     
     public List<Productosprecios> obtenerProductos(String filtro) {
-    List<Productosprecios> productos = new ArrayList<>();
-    String sql = "SELECT Nombre_producto, Precio, Icono " +
-                 "FROM Productos " +
-                 "WHERE Cantidad > 0 " +
-                 "AND Categoria IN ('Copia / Impresion', 'Papelería', 'Engargolado') " +
-                 "AND Nombre_producto LIKE ?";
-
-    try (Connection con = getConnection(); 
-         PreparedStatement pst = con.prepareStatement(sql)) {
+        List<Productosprecios> productos = new ArrayList<>();
         
-        // Agregar el filtro a la consulta (con comodines para búsqueda parcial)
-        pst.setString(1, "%" + filtro + "%");
+        // CAMBIO 1: Agregamos 'idProductos' a la consulta
+        String sql = "SELECT idProductos, Nombre_producto, Precio, Icono " +
+                     "FROM Productos " +
+                     "WHERE Cantidad > 0 " +
+                     "AND Categoria IN ('Copia / Impresion', 'Papelería', 'Engargolado') " +
+                     "AND Nombre_producto LIKE ?";
 
-        try (ResultSet rs = pst.executeQuery()) {
-            while (rs.next()) {
-                String nombre = rs.getString("Nombre_producto");
-                double precio = rs.getDouble("Precio");
-                String icono = rs.getString("Icono");
-               productos.add(ProductosFactory.getProducto(nombre, precio, icono)); // Agregar producto a la lista
+        try (Connection con = getConnection(); 
+             PreparedStatement pst = con.prepareStatement(sql)) {
+            
+            pst.setString(1, "%" + filtro + "%");
+
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    // CAMBIO 2: Obtenemos el ID
+                    int id = rs.getInt("idProductos");
+                    
+                    String nombre = rs.getString("Nombre_producto");
+                    double precio = rs.getDouble("Precio");
+                    String icono = rs.getString("Icono");
+                    
+                    // Usamos tu Factory
+                    Productosprecios prod = ProductosFactory.getProducto(nombre, precio, icono);
+                    
+                    // CAMBIO 3: Asignamos el ID
+                    prod.setId(id);
+                    
+                    productos.add(prod); 
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace(); 
         }
-    } catch (SQLException e) {
-        e.printStackTrace(); // Imprimir el error de la excepción
-    }
 
-    
-    return productos; // Retornar la lista de productos
-}
+        return productos; 
+    }
     
     
 }

@@ -10,8 +10,8 @@ package Modelo;
  */
 public class Productosprecios {
     
+    private int id;
     private String nombre,direccionicon;
-    private double precio;
 
     public Productosprecios(String nombre, double precio, String icono) {
         this.nombre = nombre;
@@ -30,5 +30,14 @@ public class Productosprecios {
     public double getPrecio() {
         return precio;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     
+    private double precio;
 }

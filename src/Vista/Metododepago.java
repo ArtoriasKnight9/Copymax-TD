@@ -17,7 +17,8 @@ import javax.swing.event.DocumentListener;
 import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
+import java.util.List;
+import Modelo.DetalleVenta;
 /**
  *
  * @author Artorias<maxstell5549@hotmail.com>
@@ -343,44 +344,63 @@ public class Metododepago extends javax.swing.JFrame {
     }
 
     private void finalizarVenta() {
-    double totalVenta = Double.parseDouble(importetxtfield.getText());
-    double pago1 = Double.parseDouble(Pago1.getText());
-    double pago2 = Double.parseDouble(Pago2.getText());
-    double recibidodinero = pago1 + pago2;
-    double cambio = recibidodinero - totalVenta;
-    String metodopago1= MetodoPago1combo.getSelectedItem().toString();
-    
-    int idVenta = VentaManager.getInstance().agregarVenta(
-        ventadatos.getUsuario(), 
-        ventadatos.getCliente(), 
-        ventadatos.getItems(), 
-        ventadatos.getSubtotal(), 
-        ventadatos.getImpuesto(), 
-        ventadatos.getDescuento(), 
-        ventadatos.getTotal(), 
-        recibidodinero, 
-        cambio,
-        metodopago1
+    try {
+        // 1. Obtener datos numéricos de la interfaz
+        double totalVenta = Double.parseDouble(importetxtfield.getText());
         
-    );
-    
+        // Validación básica de números para evitar errores si las cajas están vacías
+        double pago1 = Pago1.getText().isEmpty() ? 0.0 : Double.parseDouble(Pago1.getText());
+        double pago2 = Pago2.getText().isEmpty() ? 0.0 : Double.parseDouble(Pago2.getText());
+        
+        double recibidodinero = pago1 + pago2;
+        double cambio = recibidodinero - totalVenta;
+        String metodopago1 = MetodoPago1combo.getSelectedItem().toString();
 
-    if (idVenta != -1) {
-       
-        if (!actualizarTotalCaja(totalVenta)) {
-            dispose();
-            return;
+        // 2. OBTENER LA LISTA DE DETALLES (Aquí conectamos con Ventas.java)
+        // Nota: Asegúrate de haber pegado el método 'obtenerDetallesParaGuardar()' en Ventas.java como vimos antes
+        List<DetalleVenta> listaDetalles = ventasPanel.obtenerDetallesParaGuardar();
+        
+        // Validación: No vender si la lista está vacía
+        if (listaDetalles == null || listaDetalles.isEmpty()) {
+             JOptionPane.showMessageDialog(this, "Error: No se detectaron productos en la lista.");
+             return;
         }
-       
-        finalizarticket(idVenta, recibidodinero, cambio);
-        JOptionPane.showMessageDialog(this, "Venta finalizada.\n Total: " + totalVenta + "\nCambio: $" + cambio);
-        VentaManager.getInstance().agregarVenta(totalVenta);
-        Ventas.getInstance().ActualizarinventarioBd();      
-        Productos.getInstance().llenarTabla();
-        ventasPanel.limpiarentradas();
-        dispose();
-    } else {
-        JOptionPane.showMessageDialog(this, "Error al guardar la venta en la base de datos.");
+
+        // 3. LLAMAR AL NUEVO MÉTODO TRANSACCIONAL
+        boolean exito = VentaManager.getInstance().registrarVentaTransaccional(
+            ventadatos,       // Datos generales (Cliente, Usuario, etc.)
+            listaDetalles,    // Lista de productos con IDs
+            metodopago1,      // Forma de pago
+            recibidodinero,   // Cuanto entregó el cliente
+            cambio            // Cuanto se devolvió
+        );
+
+        if (exito) {
+            // --- ÉXITO ---
+            
+            // Actualizar caja (Esto sigue igual que antes)
+            actualizarTotalCaja(totalVenta); 
+
+            // Generar Ticket PDF
+            // Usamos '0' como ID temporal porque el ticket físico lo generas con los datos en memoria
+            finalizarticket(0, recibidodinero, cambio); 
+            
+            JOptionPane.showMessageDialog(this, "Venta guardada exitosamente.\nCambio: $" + cambio);
+            
+            // Actualizar Stock y Limpiar (Lógica visual)
+            Ventas.getInstance().ActualizarinventarioBd();      
+            Productos.getInstance().llenarTabla();
+            ventasPanel.limpiarentradas();
+            dispose(); // Cerrar ventana de cobro
+            
+        } 
+        // Nota: Si falla (exito == false), el VentaManager ya mostró el mensaje de error con JOptionPane.
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Error en los montos ingresados: " + e.getMessage());
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage());
+        e.printStackTrace();
     }
 }
     

@@ -187,6 +187,7 @@ public class Interfazprincipal extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         JMenuArqueoitem = new javax.swing.JMenuItem();
         JmenuCorteitem = new javax.swing.JMenuItem();
+        Dashboardboton = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -200,7 +201,6 @@ public class Interfazprincipal extends javax.swing.JFrame {
 
         BtnEstadísticas.setBackground(new java.awt.Color(204, 255, 255));
         BtnEstadísticas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        BtnEstadísticas.setForeground(new java.awt.Color(0, 0, 0));
         BtnEstadísticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/entrega-de-pedidos (Custom).png"))); // NOI18N
         BtnEstadísticas.setText("Estadísticas");
         BtnEstadísticas.addActionListener(new java.awt.event.ActionListener() {
@@ -211,7 +211,6 @@ public class Interfazprincipal extends javax.swing.JFrame {
 
         Btnusuarios.setBackground(new java.awt.Color(153, 204, 255));
         Btnusuarios.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        Btnusuarios.setForeground(new java.awt.Color(0, 0, 0));
         Btnusuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarios.png"))); // NOI18N
         Btnusuarios.setText("Usuarios");
         Btnusuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -222,7 +221,6 @@ public class Interfazprincipal extends javax.swing.JFrame {
 
         btnvtasdia.setBackground(new java.awt.Color(255, 204, 255));
         btnvtasdia.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnvtasdia.setForeground(new java.awt.Color(0, 0, 0));
         btnvtasdia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ventas.png"))); // NOI18N
         btnvtasdia.setText("Ventas del día ");
         btnvtasdia.addActionListener(new java.awt.event.ActionListener() {
@@ -233,7 +231,6 @@ public class Interfazprincipal extends javax.swing.JFrame {
 
         BtnProductos.setBackground(new java.awt.Color(204, 255, 204));
         BtnProductos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        BtnProductos.setForeground(new java.awt.Color(0, 0, 0));
         BtnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/papeleria (Custom).png"))); // NOI18N
         BtnProductos.setText("Productos");
         BtnProductos.addActionListener(new java.awt.event.ActionListener() {
@@ -244,7 +241,6 @@ public class Interfazprincipal extends javax.swing.JFrame {
 
         BtnCerrarsesion.setBackground(new java.awt.Color(255, 102, 102));
         BtnCerrarsesion.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        BtnCerrarsesion.setForeground(new java.awt.Color(0, 0, 0));
         BtnCerrarsesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salida.png"))); // NOI18N
         BtnCerrarsesion.setText("Cerrar Sesión");
         BtnCerrarsesion.addActionListener(new java.awt.event.ActionListener() {
@@ -260,7 +256,7 @@ public class Interfazprincipal extends javax.swing.JFrame {
             .addGroup(MenuabajoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(MenuabajoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnvtasdia, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                    .addComponent(btnvtasdia, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(BtnEstadísticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Btnusuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -317,7 +313,6 @@ public class Interfazprincipal extends javax.swing.JFrame {
 
         BtnVenta.setBackground(new java.awt.Color(204, 255, 255));
         BtnVenta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        BtnVenta.setForeground(new java.awt.Color(0, 0, 0));
         BtnVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ventas (Custom).png"))); // NOI18N
         BtnVenta.setText("Venta");
         BtnVenta.addActionListener(new java.awt.event.ActionListener() {
@@ -328,7 +323,6 @@ public class Interfazprincipal extends javax.swing.JFrame {
 
         BtnClientes.setBackground(new java.awt.Color(204, 255, 255));
         BtnClientes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        BtnClientes.setForeground(new java.awt.Color(0, 0, 0));
         BtnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/clasificacion (Custom).png"))); // NOI18N
         BtnClientes.setText("Clientes");
         BtnClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -346,7 +340,6 @@ public class Interfazprincipal extends javax.swing.JFrame {
 
         Jtxtbusquedaproductos.setBackground(new java.awt.Color(255, 204, 255));
         Jtxtbusquedaproductos.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        Jtxtbusquedaproductos.setForeground(new java.awt.Color(0, 0, 0));
         Jtxtbusquedaproductos.setText("Producto a buscar");
         Jtxtbusquedaproductos.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -457,6 +450,16 @@ public class Interfazprincipal extends javax.swing.JFrame {
             }
         });
         jMenu4.add(JmenuCorteitem);
+
+        Dashboardboton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        Dashboardboton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ventas.png"))); // NOI18N
+        Dashboardboton.setText("Dashboard");
+        Dashboardboton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DashboardbotonActionPerformed(evt);
+            }
+        });
+        jMenu4.add(Dashboardboton);
 
         jMenuBar1.add(jMenu4);
 
@@ -720,6 +723,13 @@ public class Interfazprincipal extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         mostrarventa();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void DashboardbotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DashboardbotonActionPerformed
+        JFrame ventana = new JFrame("Dashboard");
+        ventana.add(new Vista.PanelDashboard());
+        ventana.setSize(1000, 700);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_DashboardbotonActionPerformed
 
     public String validarAdministradorenBD(String nombreUsuario, String contraseña) {
         Conexion conex = new Conexion();
@@ -1108,6 +1118,7 @@ public class Interfazprincipal extends javax.swing.JFrame {
     private javax.swing.JButton BtnVenta;
     private javax.swing.JButton Btnusuarios;
     private javax.swing.JButton Contraer;
+    private javax.swing.JMenuItem Dashboardboton;
     private javax.swing.JMenuItem JMenuArqueoitem;
     private javax.swing.JMenuItem JmenuCorteitem;
     private javax.swing.JTextField Jtxtbusquedaproductos;
