@@ -161,4 +161,61 @@ public class DashboardManager {
         } catch (SQLException e) { System.err.println("Error KPI: " + e.getMessage()); }
         return promedio;
     }
+    
+    // 7. PRODUCTOS ZOMBIE (Los 5 menos vendidos que SÍ se han movido al menos una vez)
+    // Nota: Para ver los que tienen CERO ventas se requiere un query más complejo (LEFT JOIN), 
+    // por ahora veremos los que tienen menos movimiento.
+    public DefaultCategoryDataset obtenerProductosMenosVendidos(int filtro, boolean esMes) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        Conexion con = new Conexion();
+        
+        String whereClause = obtenerCondicionFecha(filtro, esMes);
+        
+        String sql = "SELECT p.Nombre_producto, SUM(dv.Cantidad) as Unidades " +
+                     "FROM detalle_venta dv " +
+                     "JOIN productos p ON dv.idProductos = p.idProductos " +
+                     "JOIN venta v ON dv.idVenta = v.idVenta " +
+                     whereClause +
+                     "GROUP BY p.Nombre_producto " +
+                     "ORDER BY Unidades ASC LIMIT 5"; // ASCendente = Menor a mayor
+
+        try (java.sql.Connection c = con.getConnection();
+             java.sql.PreparedStatement pst = c.prepareStatement(sql);
+             java.sql.ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                dataset.setValue(rs.getInt("Unidades"), "Unidades", rs.getString("Nombre_producto"));
+            }
+        } catch (java.sql.SQLException e) { System.err.println("Error Zombies: " + e.getMessage()); }
+        return dataset;
+    }
+
+    // 8. VENTAS POR MÉTODO DE PAGO (Efectivo vs Tarjeta)
+    public org.jfree.data.general.DefaultPieDataset obtenerMetodosPago(int filtro, boolean esMes) {
+        org.jfree.data.general.DefaultPieDataset dataset = new org.jfree.data.general.DefaultPieDataset();
+        Conexion con = new Conexion();
+
+        String whereClause = obtenerCondicionFecha(filtro, esMes);
+
+        String sql = "SELECT v.Metodo_pago, SUM(v.Total) as Total " +
+                     "FROM venta v " +
+                     whereClause +
+                     "GROUP BY v.Metodo_pago";
+
+        try (java.sql.Connection c = con.getConnection();
+             java.sql.PreparedStatement pst = c.prepareStatement(sql);
+             java.sql.ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                String metodo = rs.getString("Metodo_pago");
+                // Si el método es nulo o vacío, poner "Otro"
+                if(metodo == null || metodo.isEmpty()) metodo = "Otro";
+                
+                dataset.setValue(metodo, rs.getDouble("Total"));
+            }
+        } catch (java.sql.SQLException e) { System.err.println("Error Pagos: " + e.getMessage()); }
+        return dataset;
+    }
+    
+    
 }

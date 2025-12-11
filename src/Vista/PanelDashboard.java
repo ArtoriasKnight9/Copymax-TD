@@ -101,7 +101,7 @@ public class PanelDashboard extends JPanel {
         this.add(panelTop, BorderLayout.NORTH);
 
         // --- 2. ZONA CENTRAL ---
-        panelGraficos = new JPanel(new GridLayout(2, 2, 15, 15));
+        panelGraficos = new JPanel(new GridLayout(2, 3, 15, 15));
         panelGraficos.setBackground(Color.WHITE);
         panelGraficos.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
@@ -151,16 +151,21 @@ public class PanelDashboard extends JPanel {
 
     // MÉTODO CENTRAL CORREGIDO (Acepta los 2 parámetros)
     private void actualizarGraficos(int filtro, boolean esMes) {
-        panelGraficos.removeAll();
-        
-        panelGraficos.add(crearChartTopProductos(filtro, esMes));
-        panelGraficos.add(crearChartCategorias(filtro, esMes));
-        panelGraficos.add(crearChartTendencia(filtro, esMes));
-        panelGraficos.add(crearChartHorasPico(filtro, esMes));
-        
-        panelGraficos.revalidate();
-        panelGraficos.repaint();
-    }
+     panelGraficos.removeAll();
+
+     // Fila 1
+     panelGraficos.add(crearChartTopProductos(filtro, esMes));
+     panelGraficos.add(crearChartCategorias(filtro, esMes));
+     panelGraficos.add(crearChartMetodosPago(filtro, esMes)); // NUEVO
+
+     // Fila 2
+     panelGraficos.add(crearChartTendencia(filtro, esMes));
+     panelGraficos.add(crearChartHorasPico(filtro, esMes));
+     panelGraficos.add(crearChartZombies(filtro, esMes));     // NUEVO
+
+     panelGraficos.revalidate();
+     panelGraficos.repaint();
+ }
 
     // --- GRÁFICOS (Ahora pasan los 2 parámetros al Manager) ---
 
@@ -232,4 +237,45 @@ public class PanelDashboard extends JPanel {
         
         return new ChartPanel(chart);
     }
+    
+    // --- GRÁFICO ZOMBIE (Barras Horizontales) ---
+private ChartPanel crearChartZombies(int filtro, boolean esMes) {
+    DefaultCategoryDataset datos = manager.obtenerProductosMenosVendidos(filtro, esMes);
+    // Usamos createBarChart pero cambiamos la orientación a HORIZONTAL
+    JFreeChart chart = ChartFactory.createBarChart("Productos Menos Vendidos", "", "Unidades", datos, PlotOrientation.HORIZONTAL, false, true, false);
+
+    CategoryPlot plot = chart.getCategoryPlot();
+    plot.setBackgroundPaint(Color.WHITE);
+    plot.setRangeGridlinePaint(Color.LIGHT_GRAY);
+
+    BarRenderer renderer = (BarRenderer) plot.getRenderer();
+    renderer.setSeriesPaint(0, new Color(200, 50, 50)); // Rojo oscuro (Alerta)
+
+    // Etiquetas
+    renderer.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+    renderer.setDefaultItemLabelsVisible(true);
+
+    return new ChartPanel(chart);
+}
+
+// --- GRÁFICO MÉTODOS DE PAGO (Anillo/Pastel) ---
+private ChartPanel crearChartMetodosPago(int filtro, boolean esMes) {
+    DefaultPieDataset datos = manager.obtenerMetodosPago(filtro, esMes);
+    JFreeChart chart = ChartFactory.createRingChart("Flujo de Dinero (Método)", datos, true, true, false);
+
+    // Configuración para que se vea como anillo (Ring)
+    org.jfree.chart.plot.RingPlot plot = (org.jfree.chart.plot.RingPlot) chart.getPlot();
+    plot.setBackgroundPaint(Color.WHITE);
+    plot.setOutlineVisible(false);
+    plot.setSectionDepth(0.35); // Grosor del anillo
+
+    // Colores semánticos (Opcional, si sabes los nombres exactos)
+     plot.setSectionPaint("Efectivo", new Color(85, 180, 85)); // Verde
+     plot.setSectionPaint("Tarjeta", new Color(80, 80, 200));  // Azul
+
+    plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}: ${1} ({2})"));
+    plot.setLabelBackgroundPaint(new Color(255, 255, 255, 200));
+
+    return new ChartPanel(chart);
+}
 }

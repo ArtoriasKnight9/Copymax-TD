@@ -727,7 +727,10 @@ public class Interfazprincipal extends javax.swing.JFrame {
     private void DashboardbotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DashboardbotonActionPerformed
         JFrame ventana = new JFrame("Dashboard");
         ventana.add(new Vista.PanelDashboard());
-        ventana.setSize(1000, 700);
+        ventana.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH); 
+    
+        ventana.setLocationRelativeTo(null);
+
         ventana.setVisible(true);
     }//GEN-LAST:event_DashboardbotonActionPerformed
 
@@ -891,34 +894,44 @@ public class Interfazprincipal extends javax.swing.JFrame {
     }
 
     private void generarReporte(String nombreadmin, String reporthpath) {
-        try {
-            // Ruta del archivo .jasper
+    try {
+        // 1. CARGAR PARAMETROS
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("AdminenTurno", nombreadmin);
+        parameters.put("CajeroenTurno", Usuariosesion.getInstance().getNombrereal());
 
-            System.out.println(reporthpath);
+        // --- CORRECCIÓN DEL LOGO ---
+        // Buscamos la imagen dentro de los paquetes del proyecto (independiente de la ruta del disco C:)
+        // Asegúrate que la ruta coincida con tu estructura de carpetas (según tu foto es /Imagenes/...)
+        java.io.InputStream logoStream = getClass().getResourceAsStream("/Imagenes/Logopng (Custom) (1).png");
+        java.io.InputStream numeroStream = getClass().getResourceAsStream("/Imagenes/Documento A4 Cotización Corporativa Azul.png");
 
-            // Parámetros del reporte
-            Map<String, Object> parameters = new HashMap<>();
-            parameters.put("AdminenTurno", nombreadmin); // Administrador
-            parameters.put("CajeroenTurno", Usuariosesion.getInstance().getNombrereal()); // Cajero
-
-            // Conexión a la base de datos
-            Conexion conexion = new Conexion();
-            if (conexion.verificarConexion()) {
-                // Llenar el reporte con los datos
-                JasperPrint jasperPrint = JasperFillManager.fillReport(reporthpath, parameters, conexion.getConnection());
-
-                // Mostrar el reporte en el visor
-                JasperViewer viewer = new JasperViewer(jasperPrint, false); // false evita cerrar la aplicación al cerrar el visor
-                viewer.setTitle("Vista Previa del Reporte");
-                viewer.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Error de conexión a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al visualizar el reporte: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+        // Si no se llama así, ajusta el nombre del archivo. 
+        // Si no la encuentra, pasamos null para que no truene el programa
+        if (logoStream != null) {
+            parameters.put("Logo", logoStream);
+            parameters.put("Numero", numeroStream);
+        } else {
+            System.out.println("ADVERTENCIA: No se encontró el logo y los numeros para el reporte.");
         }
+        // ---------------------------
+
+        Conexion conexion = new Conexion();
+        if (conexion.verificarConexion()) {
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporthpath, parameters, conexion.getConnection());
+
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.setTitle("Vista Previa del Reporte");
+            viewer.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error de conexión a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al visualizar el reporte: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
     }
+}
+    
 
     public void registrarFondoInicial() {
         // Solicitar al usuario el fondo inicial de la caja

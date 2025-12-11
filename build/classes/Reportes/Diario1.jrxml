@@ -10,6 +10,8 @@
 	</dataset>
 	<parameter name="AdminenTurno" class="java.lang.String"/>
 	<parameter name="CajeroenTurno" class="java.lang.String"/>
+	<parameter name="Logo" class="java.io.InputStream"/>
+	<parameter name="Numeros" class="java.io.InputStream"/>
 	<query language="sql"><![CDATA[SELECT 
     c.FondoInicial, -- Fondo inicial de la caja
     (SELECT COUNT(v.idVenta) 
@@ -102,7 +104,7 @@ WHERE
 	</field>
 	<title height="150" splitType="Stretch">
 		<element kind="image" uuid="a5c475d2-7562-485d-b7a1-83247d5e1d28" x="0" y="0" width="140" height="150">
-			<expression><![CDATA["C:/Users/maxst/OneDrive/Escritorio/Copymax3.2/src/Imagenes/Logopng (Custom).png"]]></expression>
+			<expression><![CDATA[$P{Logo}]]></expression>
 		</element>
 		<element kind="staticText" uuid="9a609940-574a-41a5-a51f-647034a042a5" x="145" y="10" width="270" height="70" fontSize="50.0" hTextAlign="Center">
 			<text><![CDATA[COPYMAX]]></text>
@@ -250,7 +252,7 @@ RFC: BAPB7112044N2 Regimen Inc.Fiscal]]></text>
 			</box>
 		</element>
 		<element kind="image" uuid="e490a6e9-a3ce-44f5-a2b1-bbbe77087166" x="0" y="10" width="180" height="44">
-			<expression><![CDATA["C:/Users/maxst/OneDrive/Escritorio/Copymax3.2/src/Imagenes/Documento A4 Cotización Corporativa Azul.png"]]></expression>
+			<expression><![CDATA[$P{Numeros}]]></expression>
 		</element>
 	</pageFooter>
 	<summary height="54">
